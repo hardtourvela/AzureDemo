@@ -13,7 +13,7 @@ namespace MediaServices
     {
         static public IAsset CreateAssetAndUploadMultipleFiles(AssetCreationOptions assetCreationOptions, string folderPath)
         {
-            CloudMediaContext _context = Constants.GetContext();
+            CloudMediaContext _context = CloudContextHelper.GetContext();
 
             var assetName = "UploadMultipleFiles_" + DateTime.UtcNow.ToString();
 

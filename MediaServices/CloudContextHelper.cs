@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 
 namespace MediaServices
 {
-    static class Constants
+    static class CloudContextHelper
     {
         public static readonly string MSAccount = ConfigurationManager.AppSettings["msAccount"];
         public static readonly string MSPrimaryKey = ConfigurationManager.AppSettings["msPrimaryKey"];
         public static readonly string MSSecondaryKey = ConfigurationManager.AppSettings["msSecondaryKey"];
-        private static readonly string cookie = "cookie.txt";        
+        public static readonly string STAccount = ConfigurationManager.AppSettings["stAccount"];
+        public static readonly string STKey1 = ConfigurationManager.AppSettings["stKey1"];
+        public static readonly string STKey2 = ConfigurationManager.AppSettings["stKey2"];
+
+        private static readonly string cookie = "cookie.txt";
 
         public static CloudMediaContext GetContext()
         {
@@ -25,7 +29,9 @@ namespace MediaServices
             GetTokenInfo(out accessToken, out tokenExpiration);
 
             MediaServicesCredentials credentials = new MediaServicesCredentials(MSAccount, MSPrimaryKey);
-            credentials.RefreshToken();
+
+            if (string.IsNullOrEmpty(credentials.AccessToken))
+                credentials.RefreshToken();
 
             if (!string.IsNullOrEmpty(accessToken) && !tokenExpiration.Equals(DateTime.MaxValue))
             {

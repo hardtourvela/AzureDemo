@@ -12,7 +12,7 @@ namespace MediaServices
     {
         static public IAsset CreateAssetAndUploadSingleFile(AssetCreationOptions assetCreationOptions, string singleFilePath)
         {
-            CloudMediaContext _context = Constants.GetContext();
+            CloudMediaContext _context = CloudContextHelper.GetContext();
 
             if (!File.Exists(singleFilePath))
             {
@@ -41,6 +41,23 @@ namespace MediaServices
 
             locator.Delete();
             policy.Delete();
+
+            return inputAsset;
+        }
+
+        public static IAsset UploadFile(string fileName, AssetCreationOptions options)
+        {
+            CloudMediaContext _context = CloudContextHelper.GetContext();
+
+            IAsset inputAsset = _context.Assets.CreateFromFile(
+                fileName,
+                options,
+                (af, p) =>
+                {
+                    Console.WriteLine("Uploading '{0}' - Progress: {1:0.##}%", af.Name, p.Progress);
+                });
+
+            Console.WriteLine("Asset {0} created.", inputAsset.Id);
 
             return inputAsset;
         }

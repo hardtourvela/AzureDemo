@@ -13,9 +13,11 @@ namespace MediaServices
     {
         static void Main(string[] args)
         {
-            UploadSingleFile.CreateAssetAndUploadSingleFile(AssetCreationOptions.None, "testUploadFile.txt");
+            //UploadSingleFile.CreateAssetAndUploadSingleFile(AssetCreationOptions.None, "testUploadFile.txt");
 
-            UploadMultipleFiles.CreateAssetAndUploadMultipleFiles(AssetCreationOptions.None, "");
+            //UploadMultipleFiles.CreateAssetAndUploadMultipleFiles(AssetCreationOptions.None, "C:\\Users\\hongk\\Documents");
+
+            UploadBlock.UploadByBlock("testManifest", AssetCreationOptions.None, Directory.GetFiles("C:\\Users\\hongk\\Documents"));
 
             Console.Read();
         }
